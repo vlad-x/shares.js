@@ -12,7 +12,13 @@ module.exports = (function () {
                 return callback(err);
             }
 
-            callback(null, service.format(body));
+            try {
+                var res = service.format(body);
+            } catch(e) {
+                return callback(e);
+            }
+
+            callback(null, res);
         });
     };
 
@@ -22,7 +28,13 @@ module.exports = (function () {
                 return callback(err);
             }
 
-            callback(null, service.format(body));
+            try {
+                var res = service.format(body);
+            } catch(e) {
+                return callback(e);
+            }
+
+            callback(null, res);
         });
     };
 
@@ -172,7 +184,7 @@ module.exports = (function () {
 
             Object.keys(services).forEach(function (service) {
                 root.get[service](url).then(function (count) {
-                    results[service] = count;
+                    results[service] = count || 0;
                     done(results);
                 });
             });
